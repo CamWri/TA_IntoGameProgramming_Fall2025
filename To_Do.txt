@@ -1,0 +1,41 @@
+Possible Improvements Next Semester:
+    1. Rather than having the static way of talking to see what people want to implement into their engine/game, we could do a
+        weekly optional survey or add an optional question to the existing one to. This would allow me to maybe talk about specific
+        things in the weekly video (if we continue that) and allows you to see where everyone is at in what they want next to 
+        continue their game. This could be started midway through the semester so we establish the basics of everything.
+    2. I think it would be relativley easy/intuitive to implement the collisions of OnCollisionEnter, OnCollisionStay, and 
+        OnCollisionEnd within our new way of doing collisions
+    3. I think requiring Git would be useful. I could even create a lecture/video all about it on the first week just
+        to help them get hands on experience. You could even just get a feel for the class with how many people know 
+        how to use git but it is such a useful tool that they will need to use for Adv. Game Programming more than likley.
+    4. Seperate the array of points of the asset/model and the collision model
+        - It would be as simple as having another variable called CollisionPoints, where if its not entered, it equals
+            points. This would seperate the collision with the actual drawing of the assets so you can have a simplified
+            collision  model vs. a more advanced model. Because in unity, you can have a mesh collider, or a more 
+            pre-defined collisder which would be just changing the collision points. 
+
+Things I could add:
+    1. Breakable Platforms
+        - When particle system is implemented, make it so the platform is actually crumbling and then disapears, 
+            spawning more particles while the player is on it. 
+    2. Diversify Enemies
+        - Static shooting Enemy ("turret")
+        - Slow lobbing attack enemey ("throws a grenade like thing")
+            - Has some sort of invisible radius with the player and if in that range, stop moving and throw the projectile
+        - Charging enemy where if its in the same line of sight as the player, then it accelerates in that direction
+    3. Collectibles/Currency
+        - Do an elimiation counter where when you die, you can use this currency to upgrade your stats in like a shop scene
+            and try again
+    5. Maybe a basic UI for skills/abilities
+        - rectangle with text saying its ability and a timer for next use 
+    7. Create a scene manager and create multiple scenes with multiple path ways
+    8. Create effects like a fading away
+
+Things outside of the Video:
+    - Create a better scene
+
+Next Video:
+    - 
+
+Possible Video Ideas
+    - Show off unity and how to use what we have to move into unity

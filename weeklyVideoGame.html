@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+    <head>
+        <title>My Game</title>
+        <style>
+            *{
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="canv"></canvas>
+        
+        <script src="./engine/Vector2.js"></script>
+        <script src="./engine/Scene.js"></script>
+        <script src="./engine/GameObject.js"></script>
+        <script src="./engine/Component.js"></script>
+        <script src="./engine/Input.js"></script>
+        <script src="./engine/Engine.js"></script>
+        <script src="./engine/Time.js"></script>
+        <script src="./engine/Collisions.js"></script>
+        <script src="./engine/CameraGameObject.js"></script>
+        <script src="./engine/SceneManager.js"></script>
+
+        <script src="./engine/components/Polygon.js"></script>
+        <script src="./engine/components/Transform.js"></script>
+        <script src="./engine/components/RigidBody.js"></script>
+        <script src="./engine/components/Collider.js"></script>
+        <script src="./engine/components/Text.js"></script>
+        <script src="./engine/components/Camera.js"></script>
+        <script src="./engine/components/CameraShake.js"></script>
+
+        <script src="./weeklyVideoGame/Scene/MainScene.js"></script>
+        <script src="./weeklyVideoGame/Scene/SelectionScene.js"></script>
+
+        <script src="./weeklyVideoGame/Prefab/PlatformGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/PlayerGameObejct.js"></script>
+        <script src="./weeklyVideoGame/Prefab/HealthBarGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/WallGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/MovingPlatformGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/BasicEnemyGameObjcet.js"></script>
+        <script src="./weeklyVideoGame/Prefab/ScoreGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/SlashingAttackGameObject.js"></script>
+        <script src="./weeklyVideoGame/Prefab/DamageTextGameObject.js"></script>
+
+        <script src="./weeklyVideoGame/Components/PlayerController.js"></script>
+        <script src="./weeklyVideoGame/Components/HealthBarController.js"></script>
+        <script src="./weeklyVideoGame/Components/HealthPoolController.js"></script>
+        <script src="./weeklyVideoGame/Components/MovingPlatformController.js"></script>
+        <script src="./weeklyVideoGame/Components/EnemyController.js"></script>
+        <script src="./weeklyVideoGame/Components/ScoreController.js"></script>
+        <script src="./weeklyVideoGame/Components/SlashingAttackController.js"></script>
+        <script src="./weeklyVideoGame/Components/CharacterStatsController.js"></script>
+        <script src="./weeklyVideoGame/Components/DestroyTimer.js"></script>
+        <script src="./weeklyVideoGame/Components/StartSceneController.js"></script>
+        <script src="./weeklyVideoGame/Components/HealthTextController.js"></script>
+        <script src="./weeklyVideoGame/Components/FadingController.js"></script>
+        <script src="./weeklyVideoGame/Components/HitEffectController.js"></script>
+    
+        <script src="./weeklyVideoGame/GameProperties.js"></script>
+        <script src="./weeklyVideoGame/Assets.js"></script>
+        <script src="./weeklyVideoGame/GameGlobals.js"></script>
+
+        <script>
+
+            SceneManager.loadScene(new SelectionScene())
+            Engine.start(new GameProperties())
+
+        </script>
+    </body>
+</html>

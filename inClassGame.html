@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Day 06 Game</title>
+        <style>
+            *{
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="canv"></canvas>
+        
+        <script src="./engine/Vector2.js"></script>
+        <script src="./engine/Scene.js"></script>
+        <script src="./engine/GameObject.js"></script>
+        <script src="./engine/Component.js"></script>
+        <script src="./engine/Input.js"></script>
+        <script src="./engine/Engine.js"></script>
+        <script src="./engine/Time.js"></script>
+        <script src="./engine/Collisions.js"></script>
+
+
+        <script src="./engine/components/Polygon.js"></script>
+        <script src="./engine/components/Transform.js"></script>
+        <script src="./engine/components/RigidBody.js"></script>
+        <script src="./engine/components/Collider.js"></script>
+        <script src="./engine/components/Text.js"></script>
+        
+        <script src="./inClassGame/Scene/MainScene.js"></script>
+        <script src="./inClassGame/Scene/DeathScene.js"></script>
+
+
+        <script src="./inClassGame/Prefab/RectangleGameObject.js"></script>
+        <script src="./inClassGame/Prefab/TriangleGameObject.js"></script>
+        <script src="./inClassGame/Prefab/LaserGameObject.js"></script>
+        <script src="./inClassGame/Prefab/EnemeySpawnerGameObject.js"></script>
+        <script src="./inClassGame/Prefab/DeathGameObject.js"></script>
+        <script src="./inClassGame/Prefab/ScoreGameObject.js"></script>
+
+        <script src="./inClassGame/Components/TriangleController.js"></script>
+        <script src="./inClassGame/Components/RectangleController.js"></script>
+        <script src="./inClassGame/Components/LaserController.js"></script>
+        <script src="./inClassGame/Components/EnemeySpawnController.js"></script>
+        <script src="./inClassGame/Components/DeathController.js"></script>
+        <script src="./inClassGame/Components/ScoreController.js"></script>
+
+
+        <script>
+
+            Engine.currentScene = new MainScene()
+            Engine.start()
+
+        </script>
+    </body>
+</html>
