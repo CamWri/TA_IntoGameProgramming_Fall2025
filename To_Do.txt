@@ -26,16 +26,14 @@ Things I could add:
     3. Collectibles/Currency
         - Do an elimiation counter where when you die, you can use this currency to upgrade your stats in like a shop scene
             and try again
-    5. Maybe a basic UI for skills/abilities
-        - rectangle with text saying its ability and a timer for next use 
-    7. Create a scene manager and create multiple scenes with multiple path ways
-    8. Create effects like a fading away
+    4. Create a scene manager and create multiple scenes with multiple path ways
 
 Things outside of the Video:
     - Create a better scene
 
 Next Video:
-    - 
+    - Some sort of throwable thing based on mouse position relative to the player, make it either deal damage or have it
+        spawn something 
 
 Possible Video Ideas
     - Show off unity and how to use what we have to move into unity

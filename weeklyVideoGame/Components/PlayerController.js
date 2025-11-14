@@ -16,6 +16,9 @@ class PlayerController extends Component {
     specialAttackTimer = 10
     spawnSpecialAttack = false
 
+    projectileAttackCooldowm = 20
+    projectileAttackTimer = 20
+
     start() {
         this.rigidBody = this.gameObject.getComponent(RigidBody)
         this.characterStats = this.gameObject.getComponent(CharacterStatsController)
@@ -96,6 +99,23 @@ class PlayerController extends Component {
                 this.spawnSpecialAttack = true
                 this.rigidBody.velocity.y = 250
             }
+        }
+
+        if (Input.buttonsDownThisFrame.includes(0)) {
+            let mouseWorldSpace = Camera.screenToWorldSpace(Input.mousePosition);
+            let directionFromPlayer = mouseWorldSpace.minus(this.transform.position).normalize()
+
+            let angleRad = Math.atan2(directionFromPlayer.y, directionFromPlayer.x);
+
+            let offsetX = Math.cos(angleRad) * (this.transform.scale.x / 2);
+            let offsetY = Math.sin(angleRad) * (this.transform.scale.y / 2);
+
+            let spawnPos = new Vector2(
+                this.transform.position.x + offsetX,
+                this.transform.position.y + offsetY
+            );
+
+            instantiate(new ThrowableProjectileGameObject(angleRad), spawnPos);
         }
 
         // Clamp fall speed

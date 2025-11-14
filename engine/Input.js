@@ -23,19 +23,16 @@ class Input {
         Input.keysUpThisFrame.push(event.code)
     }
 
-    static mousedown(event){
-        if(!Input.buttonsDown.includes(event.button)){
+    static mousedown(event) {
+        if (!Input.buttonsDown.includes(event.button)) {
             Input.buttonsDown.push(event.button)
             Input.buttonsDownThisFrame.push(event.button)
         }
-
-        
     }
 
-    static mouseup(event){
-        Input.buttonsDown = Input.buttonsDown.filter(k => k != event.code)
+    static mouseup(event) {
+        Input.buttonsDown = Input.buttonsDown.filter(b => b != event.button)
         Input.buttonsUpThisFrame.push(event.button)
-
     }
 
     static mousemove(event){
