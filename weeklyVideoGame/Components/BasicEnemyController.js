@@ -30,12 +30,14 @@ class BasicEnemyController extends Component{
             this.rigidBody.velocity.y = 20
 
             if(thisBottom <= otherTop){
-                if (this.rigidBody.velocity.x < 0 && thisLeft <= otherLeft) {
-                    this.reverseDirection()
+                if(this.rigidBody.velocity.x < 0 && thisLeft <= otherLeft){
+                    //Signal we have to revere direction
+                    this.reverseDirection();
                 }
 
-                if (this.rigidBody.velocity.x > 0 && thisRight >= otherRight) {
-                    this.reverseDirection()
+                if(this.rigidBody.velocity.x > 0 && thisRight >= otherRight){
+                    //Signal we have to revere direction
+                    this.reverseDirection();
                 }
             }
         }
@@ -53,10 +55,8 @@ class BasicEnemyController extends Component{
 
     reverseDirection(){
         if(this.rigidBody.velocity.x > 0){
-            this.rigidBody.velocity.x *= -1
             this.movementRight = false
         } else if (this.rigidBody.velocity.x < 0){
-            this.rigidBody.velocity.x *= -1
             this.movementRight = true
         }
     }

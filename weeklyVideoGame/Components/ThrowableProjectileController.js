@@ -4,17 +4,17 @@ class ThrowableProjectileController extends Component{
     speed = 50000
 
     start(){
-        this.ridigBody = this.gameObject.getComponent(RigidBody)
+        this.rigidBody = this.gameObject.getComponent(RigidBody)
 
-        this.ridigBody.gravity.y = 512
-
-        this.ridigBody.velocity.x = Math.cos(this.angle) * this.speed * Time.deltaTime
-        this.ridigBody.velocity.y = Math.sin(this.angle) * this.speed * Time.deltaTime
+        this.rigidBody.gravity.y = 512
+        
+        this.rigidBody.velocity.x = Math.cos(this.angle) * this.speed
+        this.rigidBody.velocity.y = Math.sin(this.angle) * this.speed
     }
 
     update(){
-        if(this.ridigBody.velocity.x !== 0 || this.ridigBody.velocity.y !== 0){
-            this.transform.rotation = Math.atan2(this.ridigBody.velocity.y, this.ridigBody.velocity.x)
+        if(this.rigidBody.velocity.x !== 0 || this.rigidBody.velocity.y !== 0){
+            this.transform.rotation = Math.atan2(this.rigidBody.velocity.y, this.rigidBody.velocity.x)
         }
     }
 

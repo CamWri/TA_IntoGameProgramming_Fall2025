@@ -1,18 +1,17 @@
 class BasicEnemyGameObject extends GameObject{
     constructor(horizontalSpeed){
         super("Basic Enemy Game Object", {layer: "enemy"})
-
         this.addComponent(new BasicEnemyController(), {speed: new Vector2(horizontalSpeed, 0)})
-        
+
+        //Hitting the player and sprinting because of it
         const sprintSequence = new BTParallel(new BTDuration(1), new BTSprint())
+        const handleHitSequence = new BTSequence([new BTHandleHitPlayer(), sprintSequence])
 
-        const handleHit = new BTSequence([new BTHandleHitPlayer(), sprintSequence])
+        //Left and Right Movement
+        const moveLeftSequence = new BTSequence([new BTShouldMoveLeft(), new BTMoveLeft()])
+        const moveRightSequence = new BTSequence([new BTShouldMoveRight(), new BTMoveRight()])
 
-        const moveLeftSequence = new BTSequence([new BTShoudlMoveLeft(),new BTMoveLeft()])
-
-        const moveRightSequence = new BTSequence([new BTShoudlMoveRight(),new BTMoveRight()])
-
-        const movementSelect = new BTSelector([handleHit, moveLeftSequence, moveRightSequence])
+        const movementSelect = new BTSelector([handleHitSequence, moveLeftSequence, moveRightSequence])
 
         this.addComponent(new BehaviorTree(), {node: new BTRepeater(movementSelect)})
 
@@ -29,8 +28,8 @@ class BasicEnemyGameObject extends GameObject{
 
 class BTMoveRight{
     update(tree){
-        let rb = tree.gameObject.getComponent(RigidBody)
-        const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
+        const rb = tree.gameObject.getComponent(RigidBody)
+        const ec = tree.gameObject.getComponent(BasicEnemyController)
 
         rb.velocity.x = ec.speed.x
         return BehaviorTree.SUCCEEDED
@@ -39,28 +38,15 @@ class BTMoveRight{
 
 class BTMoveLeft{
     update(tree){
-        let rb = tree.gameObject.getComponent(RigidBody)
+        const rb = tree.gameObject.getComponent(RigidBody)
         const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
+
         rb.velocity.x = -ec.speed.x
         return BehaviorTree.SUCCEEDED
     }
 }
 
-class BTSprint {
-    update(tree) {
-        const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
-        const rb = tree.gameObject.getComponent(RigidBody)
-
-        const sprintSpeed = ec.speed.x * 4
-        const dir = ec.movementRight ? 1 : -1
-
-        rb.velocity.x = sprintSpeed * dir
-
-        return BehaviorTree.RUNNING
-    }
-}
-
-class BTShoudlMoveRight{
+class BTShouldMoveRight{
     update(tree){
         const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
         if(ec.movementRight){
@@ -70,7 +56,7 @@ class BTShoudlMoveRight{
     }
 }
 
-class BTShoudlMoveLeft{
+class BTShouldMoveLeft{
     update(tree){
         const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
         if(!ec.movementRight){
@@ -80,13 +66,29 @@ class BTShoudlMoveLeft{
     }
 }
 
-class BTHandleHitPlayer {
+class BTHandleHitPlayer{
     update(tree){
         const ec = tree.gameObject.getComponent(BasicEnemyController) ?? tree.gameObject.getComponent(FallingEnemyController)
+
         if(ec.hitPlayer){
             ec.hitPlayer = false
             return BehaviorTree.SUCCEEDED
         }
+
         return BehaviorTree.FAILED
+    }
+}
+
+class BTSprint{
+    update(tree){
+        const rb = tree.gameObject.getComponent(RigidBody)
+        const ec = tree.gameObject.getComponent(BasicEnemyController)
+        
+        const sprintSpeed = ec.speed.x * 5
+        const dir = ec.movementRight ? 1 : -1
+
+        rb.velocity.x = sprintSpeed * dir
+
+        return BehaviorTree.RUNNING
     }
 }

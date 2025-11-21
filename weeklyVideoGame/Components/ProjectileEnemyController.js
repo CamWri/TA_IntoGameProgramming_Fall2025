@@ -14,6 +14,7 @@ class ProjectileEnemeyController extends Component{
 
         let diff = this.playerGameObject.transform.position.minus(this.transform.position).clone()
         let opacity = this.playerGameObject.getComponent(Polygon).opacity
+
         if(diff && opacity == 1){
             if(Math.sqrt((diff.x) ** 2 + (diff.y) ** 2) < this.fireRadius && this.currentTime > this.nextShotTime){
                 this.currentTime = 0
@@ -32,7 +33,7 @@ class ProjectileEnemeyController extends Component{
             this.rigidBody.velocity.y = 20
         }
 
-        const opacity = this.gameObject.getComponent(Polygon).opacity
+        const opacity = this.playerGameObject.getComponent(Polygon).opacity
 
         if(other.name == "Player Game Object" && opacity == 1){
             other.getComponent(HealthPoolController).applyDamage(1)

@@ -13,7 +13,7 @@ class FallingEnemyController extends Component {
     }
 
     update() {
-        // Nothing needed here; movement handled by BT nodes
+
     }
 
     onCollisionEnter(other) {
@@ -28,29 +28,25 @@ class FallingEnemyController extends Component {
         const otherRight = other.transform.position.x + other.transform.scale.x
 
         if(other.name == "Platform Game Object") {
-            // Hang on platform if not dropped
-            if(!this.hasDropped) {
-                this.rigidBody.velocity.y = 0;
-                this.rigidBody.gravity.y = 0;
+            if(!this.hasDropped){
+                this.rigidBody.velocity.y = 0
+                this.rigidBody.gravity.y = 0
             } else {
-                // Restore gravity after drop
-                this.rigidBody.gravity.y = 512;
+                this.rigidBody.gravity.y = 512
             }
 
             if(thisBottom < otherTop){
-                this.rigidBody.velocity.y = 0;   
+                this.rigidBody.velocity.y = 0
             }
 
-            // Reverse horizontal movement if hitting edges
-            const hitLeftEdge = thisLeft <= otherLeft
-            const hitRightEdge = thisRight >= otherRight
-            if(hitLeftEdge){
+            if(thisLeft <= otherLeft){
                 this.reverseDirection(true)
-                if(this.isChasing) this.isChasing = false; // stop chasing when hitting edge
-            } else if (hitRightEdge){
+                if(this.isChasing) this.isChasing = false
+            } else if (thisRight >= otherRight){
                 this.reverseDirection(false)
-                if(this.isChasing) this.isChasing = false; // stop chasing when hitting edge
+                if(this.isChasing) this.isChasing = false
             }
+
         }
 
         if(other.name == "Player Game Object") {
@@ -58,7 +54,7 @@ class FallingEnemyController extends Component {
             if(opacity === 1){
                 other.getComponent(HealthPoolController).applyDamage(this.damage)
 
-                if(Math.sign(other.getComponent(RigidBody).velocity.x) != Math.sign(this.rigidBody.velocity.x)){
+                if(Math.sign(other.getComponent(RigidBody).velocity.x) != Math.sign(this.rigidBody.velocity.x) && Math.abs(thisBottom - otherBottom) < 3){
                     this.reverseDirection()
                 }
 
@@ -67,10 +63,8 @@ class FallingEnemyController extends Component {
         }
     }
 
-    reverseDirection(movementDirection =!this.movementRight) {
+    reverseDirection(movementDirection = !this.movementRight){
         this.movementRight = movementDirection
-        const rb = this.rigidBody
-        const speed = 10
-        rb.velocity.x = this.movementRight ? speed : -speed
+        this.rigidBody.velocity.x = this.movementRight ? 10 : -10
     }
 }

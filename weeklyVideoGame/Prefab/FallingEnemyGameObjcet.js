@@ -2,18 +2,19 @@ class FallingEnemyGameObject extends GameObject{
     constructor(){
         super("Falling Enemy Game Object", {layer: "enemy"})
 
-        const moveLeftSequence = new BTSequence([new BTShoudlMoveLeft(),new BTMoveLeft()])
-        const moveRightSequence = new BTSequence([new BTShoudlMoveRight(),new BTMoveRight()])
+        //Left and Right Movement
+        const moveLeftSequence = new BTSequence([new BTShouldMoveLeft(), new BTMoveLeft()])
+        const moveRightSequence = new BTSequence([new BTShouldMoveRight(), new BTMoveRight()])
 
         const baseMovement = new BTSelector([moveLeftSequence, moveRightSequence])
 
         const dropDownAttack = new BTSequence([new BTAbovePlayer(), new BTDropOnPlayer()])
 
-        const onCeilingMovemment = new BTParallel(dropDownAttack, baseMovement)
+        const onCielingMovement = new BTParallel(dropDownAttack, baseMovement)
 
         const onFloorMovement = new BTSelector([new BTChasePlayer(), baseMovement])
 
-        const movement = new BTSelector([onCeilingMovemment, onFloorMovement])
+        const movement = new BTSelector([onCielingMovement, onFloorMovement])
 
         this.addComponent(new BehaviorTree(), {node: new BTRepeater(movement)})
 
@@ -28,66 +29,67 @@ class FallingEnemyGameObject extends GameObject{
     }
 }
 
-class BTAbovePlayer {
+class BTAbovePlayer{
     update(tree){
-        const enemy = tree.gameObject;
-        const player = GameObject.find("Player Game Object");
-        const ec = enemy.getComponent(FallingEnemyController);
+        const enemy = tree.gameObject
+        const ec = tree.gameObject.getComponent(FallingEnemyController)
 
-        if(!player || ec.hasDropped) 
-            return BehaviorTree.FAILED;
-
-        const dx = Math.abs(enemy.transform.position.x - player.transform.position.x);
-        const toleranceX = 20;
-
-        const playerBelow = player.transform.position.y > enemy.transform.position.y;
-
-        if(dx <= toleranceX && playerBelow){
-            return BehaviorTree.SUCCEEDED; // allow drop
+        const player = GameObject.find("Player Game Object")
+        
+        if(!player || ec.hasDropped){
+            return BehaviorTree.FAILED
         }
 
-        return BehaviorTree.RUNNING;
+        const dx = Math.abs(enemy.transform.position.x - player.transform.position.x)
+        const toleranceX = 20;
+
+        if(dx <= toleranceX && player.transform.position.y > enemy.transform.position.y){
+            return BehaviorTree.SUCCEEDED
+        }
+
+        return BehaviorTree.RUNNING
     }
 }
 
-class BTDropOnPlayer {
-    update(tree){
-        const enemy = tree.gameObject;
-        const rb = enemy.getComponent(RigidBody);
-        const ec = enemy.getComponent(FallingEnemyController);
+class BTDropOnPlayer{
+   update(tree){
+        const enemy = tree.gameObject
+        const ec = enemy.getComponent(FallingEnemyController)
+        const rb = enemy.getComponent(RigidBody)
 
         ec.hasDropped = true;
         ec.isChasing = true;
 
-        rb.gravity.y = 512;
-        rb.velocity.y = 150;
+        rb.gravity.y = 512
+        rb.velocity.y = 150
 
-        return BehaviorTree.SUCCEEDED;
+        return BehaviorTree.SUCCEEDED
     }
 }
 
-class BTChasePlayer {
+class BTChasePlayer{
     update(tree){
-        const enemy = tree.gameObject;
-        const player = GameObject.find("Player Game Object");
-        const rb = enemy.getComponent(RigidBody);
-        const ec = enemy.getComponent(FallingEnemyController);
+        const enemy = tree.gameObject
+        const ec = enemy.getComponent(FallingEnemyController)
+        const rb = enemy.getComponent(RigidBody)
 
-        if(!player || !ec.hasDropped)
-            return BehaviorTree.FAILED;
+        const player = GameObject.find("Player Game Object")
 
-        if(!ec.isChasing){
-            return BehaviorTree.FAILED;
+        if(!player || !ec.hasDropped){
+            return BehaviorTree.FAILED
         }
 
-        const enemyX = enemy.transform.position.x;
-        const playerX = player.transform.position.x;
+        if(!ec.isChasing){
+            return BehaviorTree.FAILED
+        }
 
-        const dir = playerX > enemyX ? 1 : -1;
+        const enemyX = enemy.transform.position.x
+        const playerX = player.transform.position.x
 
-        rb.velocity.x = dir * 70; // chase speed
+        const dir = playerX > enemyX ? 1 : -1
 
-        return BehaviorTree.RUNNING;
+        rb.velocity.x = dir * 70
+
+        return BehaviorTree.RUNNING
     }
 }
-
