@@ -8,10 +8,6 @@ class Collisions {
     const worldPointsA = originalPointsA.map(p => Vector2.fromDOMPoint(a.transform.getWorldMatrix().transformPoint(p.toDOMPoint())))
     const worldPointsB = originalPointsB.map(p => Vector2.fromDOMPoint(b.transform.getWorldMatrix().transformPoint(p.toDOMPoint())))
 
-    console.log("worldPointsA", worldPointsA)
-    console.log("worldPointsB", worldPointsB)
-
-
     //Where each line formed by the polygons is stored
     const lines = []
 
@@ -23,8 +19,6 @@ class Collisions {
         lines.push(a.minus(b).orthogonal().normalize())
       }
     }
-
-    console.log("Lines", lines)
 
     //For each line...
     const diffs = []

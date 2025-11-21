@@ -33,7 +33,7 @@ class Engine{
         addEventListener("mousemove", Input.mousemove)
         SceneManager.update()
         SceneManager.getActiveScene().start()
-        Engine.gameLoop()
+        requestAnimationFrame(Engine.gameLoop)
     }
 
     static update(){

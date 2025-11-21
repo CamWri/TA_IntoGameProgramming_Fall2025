@@ -1,11 +1,12 @@
-class EnemyController extends Component{
+class BasicEnemyController extends Component{
     speed = new Vector2(10, 0)
     damage = 5
 
+    movementRight = false
+    hitPlayer = false
+    
     start(){
         this.rigidBody = this.gameObject.getComponent(RigidBody)
-        this.rigidBody.gravity.y = 512
-        this.rigidBody.velocity = this.speed
     }
 
     update(){
@@ -26,15 +27,37 @@ class EnemyController extends Component{
         const opacity = this.gameObject.getComponent(Polygon).opacity
 
         if(other.name == "Platform Game Object"){
-            this.rigidBody.velocity.y = 0
+            this.rigidBody.velocity.y = 20
 
-            if(thisLeft < otherLeft || thisRight > otherRight){
-                this.rigidBody.velocity.x = -this.rigidBody.velocity.x
+            if(thisBottom <= otherTop){
+                if (this.rigidBody.velocity.x < 0 && thisLeft <= otherLeft) {
+                    this.reverseDirection()
+                }
+
+                if (this.rigidBody.velocity.x > 0 && thisRight >= otherRight) {
+                    this.reverseDirection()
+                }
             }
         }
 
         if(other.name == "Player Game Object" && opacity == 1){
             other.getComponent(HealthPoolController).applyDamage(this.damage)
+
+            if(Math.sign(other.getComponent(RigidBody).velocity.x) != Math.sign(this.rigidBody.velocity.x) && Math.abs(thisBottom - otherBottom) < 3){
+                this.reverseDirection()
+            }
+
+            this.hitPlayer = true
+        }
+    }
+
+    reverseDirection(){
+        if(this.rigidBody.velocity.x > 0){
+            this.rigidBody.velocity.x *= -1
+            this.movementRight = false
+        } else if (this.rigidBody.velocity.x < 0){
+            this.rigidBody.velocity.x *= -1
+            this.movementRight = true
         }
     }
 }

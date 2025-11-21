@@ -4,26 +4,22 @@ class ThrowableProjectileController extends Component{
     speed = 50000
 
     start(){
-        this.rigidBody = this.gameObject.getComponent(RigidBody)
+        this.ridigBody = this.gameObject.getComponent(RigidBody)
 
-        this.rigidBody.gravity.y = 512
+        this.ridigBody.gravity.y = 512
 
-        this.rigidBody.velocity.x = Math.cos(this.angle) * this.speed * Time.deltaTime
-        this.rigidBody.velocity.y = Math.sin(this.angle) * this.speed * Time.deltaTime
+        this.ridigBody.velocity.x = Math.cos(this.angle) * this.speed * Time.deltaTime
+        this.ridigBody.velocity.y = Math.sin(this.angle) * this.speed * Time.deltaTime
     }
 
     update(){
-        const vel = this.rigidBody.velocity;
-
-        if (vel.x !== 0 || vel.y !== 0) {
-            this.transform.rotation = Math.atan2(vel.y, vel.x) 
+        if(this.ridigBody.velocity.x !== 0 || this.ridigBody.velocity.y !== 0){
+            this.transform.rotation = Math.atan2(this.ridigBody.velocity.y, this.ridigBody.velocity.x)
         }
     }
 
     onCollisionEnter(other){
-        if(other.name === "Basic Enemy Game Object"){
-            other.getComponent(HealthPoolController).applyDamage(20)
-        }
+        other.getComponent(HealthPoolController)?.applyDamage(10)
 
         this.gameObject.destroy()
     }

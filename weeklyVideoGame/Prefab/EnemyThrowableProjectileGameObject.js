@@ -1,8 +1,8 @@
-class ThrowableProjectileGameObject extends GameObject{
-    constructor(angle, speed){
-        super("Throwing Projectile Game Object", {layer: "projectile"})
+class EnemyThrowableProjectileGameObject extends GameObject{
+    constructor(){
+        super("Throwing Projectile Game Object", {layer: "enemyProjectile"})
         
-        this.addComponent(new ThrowableProjectileController(), {angle: angle, speed: speed * 250})
+        this.addComponent(new EnemyThrowableProjectileController())
         this.addComponent(new Polygon(), {points: Assets.throwingTriangle, red: 107, green: 92, blue: 77})
         this.addComponent(new Collider())
         this.addComponent(new RigidBody())

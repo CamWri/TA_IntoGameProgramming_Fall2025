@@ -28,12 +28,11 @@ Things I could add:
             and try again
     4. Create a scene manager and create multiple scenes with multiple path ways
 
-Things outside of the Video:
-    - Create a better scene
-
 Next Video:
     - Some sort of throwable thing based on mouse position relative to the player, make it either deal damage or have it
         spawn something 
+    - Creating Behavioral Tree for AI for basic enemy
+    - Creating new enemy with behavioral tree
 
 Possible Video Ideas
     - Show off unity and how to use what we have to move into unity

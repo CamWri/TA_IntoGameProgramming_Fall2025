@@ -101,21 +101,16 @@ class PlayerController extends Component {
             }
         }
 
-        if (Input.buttonsDownThisFrame.includes(0)) {
-            let mouseWorldSpace = Camera.screenToWorldSpace(Input.mousePosition);
-            let directionFromPlayer = mouseWorldSpace.minus(this.transform.position).normalize()
+        if(Input.buttonsDownThisFrame.includes(0)){
+            let mouseWorldSpace = Camera.screenToWorldSpace(Input.mousePosition)
+            let directionFromPlayer = mouseWorldSpace.minus(this.transform.position)
 
-            let angleRad = Math.atan2(directionFromPlayer.y, directionFromPlayer.x);
+            let angleRad = Math.atan2(directionFromPlayer.y, directionFromPlayer.x)
 
-            let offsetX = Math.cos(angleRad) * (this.transform.scale.x / 2);
-            let offsetY = Math.sin(angleRad) * (this.transform.scale.y / 2);
+            let offsetX = Math.cos(angleRad) * this.transform.scale.x/2
+            let offsetY = Math.sin(angleRad) * this.transform.scale.y/2
 
-            let spawnPos = new Vector2(
-                this.transform.position.x + offsetX,
-                this.transform.position.y + offsetY
-            );
-
-            instantiate(new ThrowableProjectileGameObject(angleRad), spawnPos);
+            instantiate(new ThrowableProjectileGameObject(angleRad, directionFromPlayer.magnitude), new Vector2(this.transform.position.x + offsetX, this.transform.position.y + offsetY))
         }
 
         // Clamp fall speed
@@ -161,7 +156,7 @@ class PlayerController extends Component {
         
         //Hitting your head on the wall
         if(thisTop >= otherBottom){
-            this.rigidBody.velocity.y = 0
+            this.rigidBody.velocity.y = 512 * Time.deltaTime
         }
 
         // Wall Climbing Collision

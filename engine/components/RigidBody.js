@@ -4,8 +4,9 @@ class RigidBody extends Component{
     gravity = Vector2.zero
 
     update(){
+        this.transform.position.plusEquals(this.velocity.times(Time.deltaTime))
+
         this.velocity.plusEquals(this.acceleration.times(Time.deltaTime))
         this.velocity.plusEquals(this.gravity.times(Time.deltaTime))
-        this.transform.position.plusEquals(this.velocity.times(Time.deltaTime))
     }
 }
