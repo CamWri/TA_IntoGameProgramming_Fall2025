@@ -145,6 +145,7 @@ class PlayerController extends Component {
             if(this.spawnSpecialAttack){
                 instantiate(new SlashingAttackGameObject(new Vector2(-1, 0), new Vector2(15, 15), damage, this.playerStats.projectileSpeed, this.playerStats.abilityOneRange), new Vector2(this.transform.position.x - this.transform.scale.x, this.transform.position.y - this.transform.scale.y))
                 instantiate(new SlashingAttackGameObject(new Vector2(1, 0), new Vector2(15, 15), damage, this.playerStats.projectileSpeed, this.playerStats.abilityOneRange), new Vector2(this.transform.position.x + this.transform.scale.x, this.transform.position.y - this.transform.scale.y))
+                instantiate(new SlamingGoundGameObject(), this.transform.position.clone())
                 this.specialAttackTimer = 0
                 this.spawnSpecialAttack = false
                 Camera.main.getComponent(CameraShake).startShake(0.5, 20)

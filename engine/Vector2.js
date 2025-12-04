@@ -60,6 +60,7 @@ class Vector2 {
     }
 
     normalize(){
+        if(this.magnitude == 0) return this.clone()
         return new Vector2(this.x/this.magnitude, this.y/this.magnitude)
     }
 
