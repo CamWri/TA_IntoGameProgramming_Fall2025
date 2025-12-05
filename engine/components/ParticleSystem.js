@@ -75,7 +75,6 @@ class Particle{
     }
 
     update(){
-        // Apply gravity (accelerate downward)
         this.vy += this.gravity
 
         // Move particle using velocity components
@@ -102,28 +101,19 @@ class ParticleSystem extends Component{
     particleColor = new ConstantColorDistribution(255, 255, 255)
     particleDirection = new UniformDistribution(0, Math.PI * 2)
     particleGravity = new ConstantDistribution(0)
-    continuousSpawnInterval = new ConstantDistribution(1)
-    continousSpawnParticleCount = new ConstantDistribution(0)
     maintainParticleCount = false
+    continousParticleSpawning = false
+    continousSpawnInterval = new ConstantDistribution(1)
+    continousSpawnParticleCount = new ConstantDistribution(0)
 
     spawnTimer = 0
 
     start(){
-        for(let i = 0; i < this.startParticles.sample(); i++){
-            this.particles.push(
-                new Particle({
-                    velocity: this.particleVelocity.sample(),
-                    lifetime: this.particleLifeTime.sample(),
-                    size: this.particleSize.sample(),
-                    color: this.particleColor.sample(),
-                    direction: this.particleDirection.sample(),
-                    gravity: this.particleGravity.sample(),
-                })
-            )
-        }
+        this.startParticleCount = this.startParticles.sample()
+        
+        this.drawParticle(this.startParticleCount)
 
-        this.currentInverval = this.continuousSpawnInterval.sample()
-
+        this.currentInteval = this.continousSpawnInterval.sample()
     }
 
     update(){
@@ -135,42 +125,20 @@ class ParticleSystem extends Component{
 
         this.particles = this.particles.filter(p => !p.isDead)
 
-        let particleDifference = this.startParticles.sample() - this.particles.length
+        let particleCountDifference = this.startParticleCount - this.particles.length
 
-        if(this.maintainParticleCount && particleDifference > 0){
-            for(let i = 0; i < particleDifference; i++){
-                this.particles.push(
-                    new Particle({
-                        velocity: this.particleVelocity.sample(),
-                        lifetime: this.particleLifeTime.sample(),
-                        size: this.particleSize.sample(),
-                        color: this.particleColor.sample(),
-                        direction: this.particleDirection.sample(),
-                        gravity: this.particleGravity.sample(),
-                    })
-                )
-            }
+        if(this.maintainParticleCount && particleCountDifference > 0){
+            this.drawParticle(particleCountDifference)
         }
-        
-        if(this.spawnTimer >= this.currentInverval && this.currentInverval > 0){
-            for(let i = 0; i < this.continousSpawnParticleCount.sample(); i++){
-                this.particles.push(
-                        new Particle({
-                            velocity: this.particleVelocity.sample(),
-                            lifetime: this.particleLifeTime.sample(),
-                            size: this.particleSize.sample(),
-                            color: this.particleColor.sample(),
-                            direction: this.particleDirection.sample(),
-                            gravity: this.particleGravity.sample(),
-                        })
-                )
-            }
+
+        if(this.continousParticleSpawning && this.spawnTimer >= this.currentInteval && this.currentInteval >= 0){
+            this.drawParticle(this.continousSpawnParticleCount.sample())
 
             this.spawnTimer = 0
-            this.currentInverval = this.continuousSpawnInterval.sample()
+            this.currentInteval = this.continousSpawnInterval.sample()
         }
 
-        if(this.particles.length <= 0){
+        if(this.particles.length <= 0 && this.continousParticleSpawning){
             this.gameObject.destroy()
         }
     }
@@ -181,6 +149,21 @@ class ParticleSystem extends Component{
             ctx.beginPath()
             ctx.arc(particle.position.x, particle.position.y, particle.size, 0, 2 * Math.PI)
             ctx.fill()
+        }
+    }
+
+    drawParticle(particleAmount){
+        for(let i = 0; i < particleAmount; i++){
+            this.particles.push(
+                new Particle({
+                    velocity: this.particleVelocity.sample(),
+                    lifetime: this.particleLifeTime.sample(),
+                    size: this.particleSize.sample(),
+                    color: this.particleColor.sample(),
+                    direction: this.particleDirection.sample(),
+                    gravity: this.particleGravity.sample()
+                })
+            )
         }
     }
 }

@@ -9,9 +9,10 @@ class SlamingGoundGameObject extends GameObject{
             particleColor: new UniformColorDistribution(255, 255, 255, 0, 0, 0),
             particleDirection: new UniformDistribution(Math.PI, Math.PI * 2),
             particleGravity: new ConstantDistribution(0.05),
-            //continuousSpawnInterval: new UniformDistribution(1, 1),
-            //continousSpawnParticleCount: new ConstantDistribution(5)
-            maintainParticleCount: true
+            maintainParticleCount: false,
+            continousParticleSpawning: true,
+            continousSpawnInterval: new UniformDistribution(0.1, 0.5),
+            continousSpawnParticleCount: new ConstantDistribution(5),
         })
     }
 }
